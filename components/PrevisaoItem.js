@@ -11,15 +11,13 @@ const PrevisaoItem = (props) => {
                     <View style={estilos.primeiraLinha}>
                         <Text>Date - {new Date(props.previsao.dt * 1000).toLocaleDateString()}
                         </Text>
-                        <Text>Actual Feels like: - {props.previsao.current.feels_like}
-                        </Text>
                     </View>
                     <View style={estilos.segundaLinha}>
                         <Text style={estilos.valor}>Sunrise:
-                         {new Date(props.previsao.current.sunrise).toLocaleTimeString()}
+                         {new Date(props.previsao.sunrise * 1000).toLocaleTimeString()}
                         </Text>
                         <Text style={estilos.valor}>Sunset:
-                        {new Date(props.previsao.current.sunset).toLocaleTimeString()}</Text>
+                        {new Date(props.previsao.sunset * 1000).toLocaleTimeString()}</Text>
                     </View>
                     <Image
                         style={estilos.imagem}
@@ -27,13 +25,13 @@ const PrevisaoItem = (props) => {
                     />
                     <View style={estilos.terceiraLinha}>
                         <Text style={estilos.valor}>Morning Feels Like:
-                        {props.previsao.daily.feels_like.morn}</Text>
+                        {props.previsao.feels_like.morn}</Text>
                         <Text style={estilos.valor}>Day Feels Like:
-                        {props.previsao.daily.feels_like.day}</Text>
+                        {props.previsao.feels_like.day}</Text>
                         <Text style={estilos.valor}>Evening Feels Like:
-                        {props.previsao.daily.feels_like.eve}</Text>
+                        {props.previsao.feels_like.eve}</Text>
                         <Text style={estilos.valor}>Night Feels Like:
-                        {props.previsao.daily.feels_like.night}</Text>
+                        {props.previsao.feels_like.night}</Text>
                     </View>
                 </View>
             </View>

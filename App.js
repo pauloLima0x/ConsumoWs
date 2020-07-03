@@ -19,36 +19,40 @@ export default function App() {
     const target = endPointForecast + city + '&appid=' + apiKey;
     fetch(target)
       .then((dados => dados.json()))
-      .then(dados => setCityData(dados["city"]));
+      .then(dados => gravaDados(dados["city"]));
   }
 
 
-  // Captura os dados da cidade e já faz uma nova chamada para obter os dados do dia
-  const setCityData = (cidade) =>{
-    
-    // atribui valor a cidade
-    setCity(cidade);
+  const gravaDados = (dados) => {
+
+    // Inicializa o array
+    setDailyWeatherData([]);
 
     // Latitude e longitude
-    lat = cidade.coord.lat;
-    lon = cidade.coord.lon;
+    var lat = dados["coord"]["lat"];
+    var lon = dados["coord"]["lon"];
 
     // Monta a chamada para a api One Call
     const targetDailyWeather = endPointOneCall +
-     'lat=' + lat +
-     '&lon=' + lon;
+      'lat=' + lat +
+      '&lon=' + lon + 
+      '&appid=' + apiKey;
 
     // Faz a chamada e captura o resultado
     fetch(targetDailyWeather)
       .then((dadosDaily => dadosDaily.json()))
-      .then(dadosDaily => setDailyWeatherData(dadosDaily[""])); // Teste para ver se pega todos os dados
-    
-  } 
+      .then(dadosDaily => {
+        setDailyWeatherData(dadosDaily["daily"]);
+        console.log(dadosDaily["daily"]);
+      }
+      );
+  }
 
-  const lat = 0;
-  const lon = 0;
   const [city, setCity] = useState('');
   const [dailyWeatherData, setDailyWeatherData] = useState([]);
+  const changeCity = (city) => {
+    setCity(city)
+  }
 
   return (
     <View style={styles.container}>
@@ -56,9 +60,9 @@ export default function App() {
         <TextInput
           style={styles.nomeCidade}
           placeholder="Digite o nome de uma cidade"
-          onChangeText={capturarCidade}
+          onChangeText={changeCity}
         />
-        <Button 
+        <Button
           title="OK"
           onPress={obterPrevisoes}
         />
@@ -67,24 +71,24 @@ export default function App() {
         data={dailyWeatherData}
         renderItem={
           previsao => <PrevisaoItem previsao={previsao.item}></PrevisaoItem>}
-      />        
-        
+      />
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  entrada:{
+  entrada: {
     flexDirection: 'column'
   },
-  nomeCidade:{
+  nomeCidade: {
     padding: 10,
     borderBottomColor: '#BB96F3',
     borderBottomWidth: 2,
     textAlign: 'left',
     marginBottom: 4,
     fontsize: 18,
-  },  
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
