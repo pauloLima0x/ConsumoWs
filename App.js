@@ -9,7 +9,7 @@ export default function App() {
 
   // API onde será feita a chamada que realmente interessa
   const endPointOneCall = "https://api.openweathermap.org/data/2.5/onecall?lang=pt_br&units=metric&";
-  const apiKey = "10341d973dea0c4bd54bae1e6d6a0994"; // Sem a key no commit
+  const apiKey = ""; // Sem a key no commit
 
 
   // Faz uma requisição primária ao web service para obter os dados da cidade (latitude e longitude)
