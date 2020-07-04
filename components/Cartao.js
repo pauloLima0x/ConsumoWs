@@ -16,7 +16,8 @@ const estilos = StyleSheet.create({
         elevation: 4,
         backgroundColor: 'white',
         padding: 12,
-        borderRadius: 12
+        borderRadius: 2,
+        borderColor: '#BB96F3'
     }
 });
 

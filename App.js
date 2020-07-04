@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, FlatList, Alert } from 'react-native';
 import PrevisaoItem from './components/PrevisaoItem';
 
 export default function App() {
@@ -9,7 +9,7 @@ export default function App() {
 
   // API onde será feita a chamada que realmente interessa
   const endPointOneCall = "https://api.openweathermap.org/data/2.5/onecall?lang=pt_br&units=metric&";
-  const apiKey = ""; // Sem a key no commit
+  const apiKey = "10341d973dea0c4bd54bae1e6d6a0994"; // Sem a key no commit
 
 
   // Faz uma requisição primária ao web service para obter os dados da cidade (latitude e longitude)
@@ -25,6 +25,17 @@ export default function App() {
 
   const gravaDados = (dados) => {
 
+    // Se não tem dados, impede a continuação do processo
+    if (dados === undefined) {
+      Alert.alert(
+        "Cidade Inválida",
+        "Digite uma cidade válida!",
+        [
+          { text: "OK" }
+        ]
+      );
+      return;
+    }
     // Inicializa o array
     setDailyWeatherData([]);
 
@@ -35,7 +46,7 @@ export default function App() {
     // Monta a chamada para a api One Call
     const targetDailyWeather = endPointOneCall +
       'lat=' + lat +
-      '&lon=' + lon + 
+      '&lon=' + lon +
       '&appid=' + apiKey;
 
     // Faz a chamada e captura o resultado
@@ -43,9 +54,7 @@ export default function App() {
       .then((dadosDaily => dadosDaily.json()))
       .then(dadosDaily => {
         setDailyWeatherData(dadosDaily["daily"]);
-        console.log(dadosDaily["daily"]);
-      }
-      );
+      });
   }
 
   const [city, setCity] = useState('');
@@ -62,6 +71,9 @@ export default function App() {
           placeholder="Digite o nome de uma cidade"
           onChangeText={changeCity}
         />
+        <Text>
+
+        </Text>
         <Button
           title="OK"
           onPress={obterPrevisoes}
@@ -89,9 +101,12 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     fontsize: 18,
   },
+  botao: {
+
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFF',
     alignItems: 'center',
     padding: 40
   }

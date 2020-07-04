@@ -9,29 +9,33 @@ const PrevisaoItem = (props) => {
             <View style={estilos.tela}>
                 <View>
                     <View style={estilos.primeiraLinha}>
-                        <Text>Date - {new Date(props.previsao.dt * 1000).toLocaleDateString()}
+                        <Image
+                            style={estilos.imagemDia}
+                            source={{ uri: 'https://openweathermap.org/img/wn/01d.png' }}
+                        />
+                        <Text style={estilos.titulo}>Data - {new Date(props.previsao.dt * 1000).toLocaleDateString()}
                         </Text>
+                        <Image
+                            style={estilos.imagemNoite}
+                            source={{ uri: 'https://openweathermap.org/img/wn/01n.png' }}
+                        />
                     </View>
                     <View style={estilos.segundaLinha}>
-                        <Text style={estilos.valor}>Sunrise:
-                         {new Date(props.previsao.sunrise * 1000).toLocaleTimeString()}
+                        <Text style={estilos.valor}>
+                            {'Nascer do sol - ' + new Date(props.previsao.sunrise * 1000).toLocaleTimeString()}
                         </Text>
-                        <Text style={estilos.valor}>Sunset:
-                        {new Date(props.previsao.sunset * 1000).toLocaleTimeString()}</Text>
+                        <Text style={estilos.valor}>
+                            {'| Pôr do sol - ' + new Date(props.previsao.sunset * 1000).toLocaleTimeString()}</Text>
                     </View>
-                    <Image
-                        style={estilos.imagem}
-                        source={{ uri: 'https://openweathermap.org/img/wn/01d.png' }}
-                    />
-                    <View style={estilos.terceiraLinha}>
-                        <Text style={estilos.valor}>Morning Feels Like:
-                        {props.previsao.feels_like.morn}</Text>
-                        <Text style={estilos.valor}>Day Feels Like:
-                        {props.previsao.feels_like.day}</Text>
-                        <Text style={estilos.valor}>Evening Feels Like:
-                        {props.previsao.feels_like.eve}</Text>
-                        <Text style={estilos.valor}>Night Feels Like:
-                        {props.previsao.feels_like.night}</Text>
+                    <View style={estilos.feelsLikeLinha}>
+                        <Text>
+                            {'Manhã = ' + props.previsao.feels_like.morn + '°C'}</Text>
+                        <Text>
+                            {'Dia = ' + props.previsao.feels_like.day + '°C'}</Text>
+                        <Text>
+                            {'Tarde = ' + props.previsao.feels_like.eve + '°C'}</Text>
+                        <Text>
+                            {'Noite = ' + props.previsao.feels_like.night + '°C'}</Text>
                     </View>
                 </View>
             </View>
@@ -40,19 +44,29 @@ const PrevisaoItem = (props) => {
 }
 
 const estilos = StyleSheet.create({
+    titulo: {
+        fontSize: 16,
+        paddingTop: 10
+    },
     cartao: {
         marginBottom: 5
     },
     tela: {
         flexDirection: 'row'
     },
-    imagem: {
+    imagemDia: {
         width: 50,
-        height: 50
+        height: 50,
+        alignContent: "flex-start"
+    },
+    imagemNoite: {
+        width: 50,
+        height: 50,
+        alignContent: "flex-end"
     },
     primeiraLinha: {
         justifyContent: 'center',
-        flexDirection: 1
+        flexDirection: 'row',
     },
     segundaLinha: {
         flex: 1,
@@ -61,6 +75,10 @@ const estilos = StyleSheet.create({
         marginTop: 4,
         borderTopWidth: 1,
         borderTopColor: '#DDD'
+    },
+    feelsLikeLinha: {
+        borderBottomWidth: 3,
+        borderBottomColor: '#DDD'
     },
     valor: {
         marginHorizontal: 2
